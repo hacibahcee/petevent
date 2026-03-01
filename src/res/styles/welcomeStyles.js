@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+const window = Dimensions.get('window');
 
 module.exports = StyleSheet.create({
     safeAreaContent: {
@@ -12,14 +13,8 @@ module.exports = StyleSheet.create({
     },
 
     peteventLogo: {
-        width: 500, 
-        height: 500
-    },
-    
-    welcomeText: {
-        marginVertical: 20, 
-        color:"#1D3B5A", 
-        fontSize: 24
+        width: window.width/1.5, 
+        height: window.width/1.5
     }
 
 });
