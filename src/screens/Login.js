@@ -5,45 +5,32 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import images from '../res/images';
 import { useEffect, useState } from 'react';
 import { Modal, RadioButton } from 'react-native-paper';
-import { changeLanguage } from '../config/languages/language';
+import { changeLanguage, initLanguage, setLanguage } from '../config/languages/language';
 import RNRestart from 'react-native-restart';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Platform, NativeModules } from 'react-native';
 
 const Login = () => {
   const [languageModal, setLanguageModal] = useState(false);
   const [selectedLang, setSelectedLang] = useState('tr');
+  const [languageReady, setLanguageReady] = useState(false);
 
-  const storeData = async (key, value) => {
-    try {
-      await AsyncStorage.setItem(key, value);
-    } catch (e) { }
-  };
-
-   const setNewLang = () => {
-    storeData('language', selectedLang);
+  const setNewLang = async () => {
+    await setLanguage(selectedLang);
     RNRestart.Restart();
   };
 
   useEffect(() => {
-  const getLanguage = async () => {
-    const language = await AsyncStorage.getItem('language');
-
-    if (language !== null) {
+    const loadLanguage = async () => {
+      const language = await initLanguage();
       setSelectedLang(language);
-    } else {
-      const deviceLang =
-        Platform.OS === 'ios'
-          ? NativeModules.SettingsManager.settings.AppleLanguages[0].split('-')[0]
-          : NativeModules.I18nManager.localeIdentifier.split('_')[0];
+      setLanguageReady(true);
+    };
 
-      await storeData('language', deviceLang);
-      setSelectedLang(deviceLang);
-    }
-  };
+    loadLanguage();
+  }, []);
 
-  getLanguage();
-}, []);
+  if (!languageReady) {
+    return null;
+  }
 
   return (
     <View style={loginStyles.background}>
@@ -58,6 +45,7 @@ const Login = () => {
             style={loginStyles.languageButtonColor}
           />
         </TouchableOpacity>
+
         <Modal
           visible={languageModal}
           onDismiss={() => setLanguageModal(false)}
@@ -96,19 +84,19 @@ const Login = () => {
               >
                 {changeLanguage('language')}
               </Text>
+
               <TouchableOpacity
                 style={{ alignSelf: 'center' }}
                 onPress={() => setLanguageModal(false)}
               >
-                {
-                  <Icon
-                    name="circle-xmark"
-                    size={25}
-                    color={'white'}
-                  />
-                }
+                <Icon
+                  name="circle-xmark"
+                  size={25}
+                  color={'white'}
+                />
               </TouchableOpacity>
             </View>
+
             <View style={{ margin: 15 }}>
               <View style={{ flexDirection: 'row' }}>
                 <View>
@@ -117,7 +105,7 @@ const Login = () => {
                     value={selectedLang}
                   >
                     <RadioButton.Item
-                      label= {changeLanguage('turkish')}
+                      label={changeLanguage('turkish')}
                       value="tr"
                       color={'white'}
                       style={{
@@ -125,15 +113,14 @@ const Login = () => {
                         paddingHorizontal: 0,
                         color: '#FFF',
                       }}
-                      labelStyle={[
-                        {
-                          fontWeight: selectedLang == 'en' ? 'bold' : 'normal',
-                          color: 'white',
-                        },
-                      ]}
+                      labelStyle={{
+                        fontWeight: selectedLang === 'tr' ? 'bold' : 'normal',
+                        color: 'white',
+                      }}
                     />
+
                     <RadioButton.Item
-                      label= {changeLanguage('english')}
+                      label={changeLanguage('english')}
                       value="en"
                       color={'white'}
                       style={{
@@ -141,16 +128,14 @@ const Login = () => {
                         paddingHorizontal: 0,
                         color: '#FFF',
                       }}
-                      labelStyle={[
-                        //styles.radioLabel,
-                        {
-                          fontWeight: selectedLang == 'tr' ? 'bold' : 'normal',
-                          color: 'white',
-                        },
-                      ]}
+                      labelStyle={{
+                        fontWeight: selectedLang === 'en' ? 'bold' : 'normal',
+                        color: 'white',
+                      }}
                     />
                   </RadioButton.Group>
-                  <TouchableOpacity onPress={() => setNewLang()}>
+
+                  <TouchableOpacity onPress={setNewLang}>
                     <ImageBackground
                       source={images.enter_button}
                       style={{
