@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
+import colors from '../colors';
 
 module.exports = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: '#0F172A',
+    backgroundColor: colors.backgroundColor,
   },
 
   safeAreaContent: {
@@ -19,7 +20,7 @@ module.exports = StyleSheet.create({
   petEventLogoView: {
     width: 150,
     height: 150,
-    backgroundColor: '#334155',
+    backgroundColor: colors.petEventLogoBackground,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
@@ -38,7 +39,7 @@ module.exports = StyleSheet.create({
   petEventText: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#F1F5F9',
+    color: colors.petEventTextColor,
     marginTop: 20,
   },
 });

@@ -1,10 +1,10 @@
-import { Dimensions, StyleSheet } from 'react-native';
-const window = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
+import colors from '../colors';
 
 module.exports = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: '#0F172A',
+    backgroundColor: colors.backgroundColor,
   },
 
   safeAreaContent: {
@@ -17,31 +17,42 @@ module.exports = StyleSheet.create({
   },
 
   languageButtonColor: {
-    color: '#F48C25',
+    color: colors.buttonOrangeColor,
   },
 
-  mainView: {
-    flex: 1,
-    alignItems: 'center',
+  modalContainer: {
+    borderRadius: 10,
+    marginHorizontal: 10,
+    padding: 20,
+    backgroundColor: colors.petEventLogoBackground,
+    borderWidth: 1,
+    borderColor: colors.buttonOrangeColor,
+  },
+
+  modalContainerInner: {
+    alignContent: 'center',
     justifyContent: 'center',
-    flexDirection: 'column',
-  },
-
-  peteventLogo: {
-    width: window.width / 4,
-    height: window.width / 4,
-  },
-
-  registButtonsView: {
-    flexDirection: 'row',
     alignSelf: 'center',
   },
 
-  registButtons: {
-    color: '#1D3B5A',
-    borderColor: '#1D3B5A',
-    borderWidth: 3,
-    borderRadius: 10,
-    padding: 20,
+  languageModalTitleView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
+
+  languageModalTitle: {
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: colors.petEventTextColor,
+  },
+
+  languageModalCross: {
+    alignSelf: 'center'
+  },
+
+  languagesText: {
+    paddingHorizontal: 0,
+    color: colors.petEventTextColor
+  }
 });

@@ -12,7 +12,6 @@ const getDeviceLanguage = () => {
   if (languageCode === 'tr') {
     return 'tr';
   }
-
   return 'en';
 };
 
