@@ -1,5 +1,6 @@
 const images = {
-    petevent_logo: require('./images/petevent_logo.png')
+    petevent_logo: require('./images/petevent_logo.png'),
+    background: require('./images/background.png')
 }
 
 export default images;

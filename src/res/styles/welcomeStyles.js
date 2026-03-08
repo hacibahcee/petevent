@@ -1,7 +1,11 @@
-import { Dimensions, StyleSheet } from 'react-native';
-const window = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
 
 module.exports = StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: '#0F172A',
+    },
+
     safeAreaContent: {
         flex: 1
     },
@@ -13,8 +17,8 @@ module.exports = StyleSheet.create({
     },
 
     peteventLogo: {
-        width: window.width/1.5, 
-        height: window.width/1.5
+        width: 80, 
+        height: 120
     }
 
 });
